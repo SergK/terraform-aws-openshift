@@ -1,9 +1,30 @@
-variable "platform_name" {
-  description = "The name of the cluster that is used for tagging some resources"
+## Terraform specific
+variable "region" {
+  description = "The region to apply these templates to (e.g. us-east-1)"
+  default     = "us-east-1"
 }
 
-variable "key_pair_private_key_path" {
-  description = "AWS key pair that is used for instances of the cluster includes the bastion"
+variable "aws_profile" {
+  description = "Profile to use to running terraform"
+}
+
+## Network options
+variable "platform_name" {
+  default = "openshift"
+}
+
+variable "platform_cidr" {
+  default = "10.0.0.0/16"
+}
+
+variable "private_cidrs" {
+  type    = "list"
+  default = ["10.0.0.0/19", "10.0.32.0/19", "10.0.64.0/19"]
+}
+
+variable "public_cidrs" {
+  type    = "list"
+  default = ["10.0.128.0/20", "10.0.144.0/20", "10.0.160.0/20"]
 }
 
 variable "operator_cidrs" {
@@ -18,48 +39,56 @@ variable "public_access_cidrs" {
   description = "CIDRS that is allowed from which public users can access served services in the cluster"
 }
 
-variable "compute_node_count" {
+## Access to nodes
+variable "key_name" {
+  default = "amazon_id_rsa"
+}
+
+## Infra node configuration
+variable "infra_node_count" {
   default = 2
 }
 
-variable "infra_node_count" {
-  default = 1
+variable "infra_node_spot_price" {
+  default     = "0.03"
+  description = "When set to empty will spin-up instance on-demand"
 }
 
+variable "infra_node_instance_type" {
+  default = "r3.large"
+}
+
+variable "infra_node_root_vol_size" {
+  default = "15"
+}
+
+variable "infra_node_glusterfs_vol_size" {
+  default = "20"
+}
+
+## Master node configuration
 variable "master_count" {
   default = 1
 }
 
 variable "master_spot_price" {
-  default = "0.05"
+  default     = "0.03"
+  description = "When set to empty will spin-up instance on-demand"
 }
 
-variable "upstream" {
-  description = "Sets true if you want to install Origin."
-  default     = false
+variable "master_instance_type" {
+  default = "r3.large"
 }
 
-variable "rh_subscription_pool_id" {
-  description = "Red Hat subscription pool id for OpenShift Container Platform"
-  default     = ""
+variable "master_root_vol_size" {
+  default = "15"
 }
 
-variable "rhn_username" {
-  description = "Red Hat Network login username for registration system of the OpenShift Container Platform cluster"
-  default     = ""
+variable "master_glusterfs_vol_size" {
+  default = "20"
 }
 
-variable "rhn_password" {
-  description = "Red Hat Network login password for registration system of the OpenShift Container Platform cluster"
-  default     = ""
-}
-
+## Openshift config
 variable "openshift_major_version" {
-  default = "3.9"
-}
-
-# Domains
-
-variable "platform_default_subdomain" {
-  description = "Public DNS subdomain for access to services served in the cluster"
+  default = "3.7"
 }

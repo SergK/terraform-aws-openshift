@@ -1,5 +1,9 @@
-**/backend.tf
-.terraform/
+*.pyc
+.terraform
 *.tfstate
 *.tfstate.*
-.envrc
+*.swp
+.idea
+*.iml
+.DS_Store
+*.env
