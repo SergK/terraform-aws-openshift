@@ -40,29 +40,33 @@ resource "aws_autoscaling_group" "master" {
   force_delete              = true
   launch_configuration      = "${aws_launch_configuration.master.name}"
 
-  # target_group_arns         = ["${aws_lb_target_group.master_public.arn}", "${aws_lb_target_group.master_public_insecure.arn}"]
-  # load_balancers = ["${aws_elb.master.name}"]
+  target_group_arns = ["${aws_lb_target_group.master_public.arn}", "${aws_lb_target_group.master_public_insecure.arn}"]
+  load_balancers    = ["${aws_elb.master.name}"]
 
   tag {
     key                 = "kubernetes.io/cluster/${var.platform_name}"
     value               = "owned"
     propagate_at_launch = true
   }
+
   tag {
     key                 = "Name"
     value               = "${var.platform_name}-master"
     propagate_at_launch = true
   }
+
   tag {
     key                 = "Role"
     value               = "node,master"
     propagate_at_launch = true
   }
+
   tag {
     key                 = "openshift_schedulable"
     value               = "false"
     propagate_at_launch = true
   }
+
   timeouts {
     delete = "15m"
   }

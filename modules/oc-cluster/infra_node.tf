@@ -44,35 +44,40 @@ resource "aws_autoscaling_group" "infra_node" {
   force_delete              = true
   launch_configuration      = "${aws_launch_configuration.infra_node.name}"
 
-  # target_group_arns = [
-  #   "${aws_lb_target_group.platform_public_insecure.arn}",
-  # ]
+  target_group_arns = [
+    "${aws_lb_target_group.platform_public_insecure.arn}",
+  ]
 
   tag {
     key                 = "kubernetes.io/cluster/${var.platform_name}"
     value               = "owned"
     propagate_at_launch = true
   }
+
   tag {
     key                 = "Name"
     value               = "${var.platform_name}-infra-node"
     propagate_at_launch = true
   }
+
   tag {
     key                 = "Role"
     value               = "node"
     propagate_at_launch = true
   }
+
   tag {
     key                 = "openshift_node_labels_region"
     value               = "infra"
     propagate_at_launch = true
   }
+
   tag {
     key                 = "openshift_schedulable"
     value               = "true"
     propagate_at_launch = true
   }
+
   timeouts {
     delete = "15m"
   }
