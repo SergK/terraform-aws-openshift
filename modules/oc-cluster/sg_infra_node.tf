@@ -29,7 +29,7 @@ resource "aws_security_group" "platform_public" {
     "Role", "infra,node",
     )}"
 
-  vpc_id = "${data.aws_vpc.platform.id}"
+  vpc_id = "${var.platform_vpc_id}"
 }
 
 resource "aws_security_group" "infra_node" {
@@ -63,5 +63,5 @@ resource "aws_security_group" "infra_node" {
     "Role", "infra,node",
     )}"
 
-  vpc_id = "${data.aws_vpc.platform.id}"
+  vpc_id = "${var.platform_vpc_id}"
 }

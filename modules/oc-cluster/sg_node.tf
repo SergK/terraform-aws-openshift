@@ -30,5 +30,5 @@ resource "aws_security_group" "node" {
     "Role", "node",
     )}"
 
-  vpc_id = "${data.aws_vpc.platform.id}"
+  vpc_id = "${var.platform_vpc_id}"
 }

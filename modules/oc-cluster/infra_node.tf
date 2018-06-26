@@ -31,17 +31,10 @@ resource "aws_launch_configuration" "infra_node" {
     volume_size           = "${var.infra_node_root_vol_size}"
     delete_on_termination = true
   }
-
-  # glusterfs volume
-  ebs_block_device {
-    volume_type = "gp2"
-    device_name = "/dev/xvdb"
-    volume_size = "${var.infra_node_glusterfs_vol_size}"
-  }
 }
 
 resource "aws_autoscaling_group" "infra_node" {
-  vpc_zone_identifier       = ["${data.aws_subnet.private.*.id}"]
+  vpc_zone_identifier       = ["${var.private_subnet_ids}"]
   name                      = "${var.platform_name}-infra-node"
   max_size                  = "${var.infra_node_count}"
   min_size                  = "${var.infra_node_count}"

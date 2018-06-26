@@ -27,7 +27,7 @@
 #   port = 80
 #   protocol = "HTTP"
 #   deregistration_delay = 20
-#   vpc_id = "${data.aws_vpc.platform.id}"
+#   vpc_id = "${var.platform_vpc_id}"
 # }
 #
 # data "aws_acm_certificate" "platform_public" {

@@ -50,12 +50,12 @@ variable "infra_node_count" {
 }
 
 variable "infra_node_spot_price" {
-  default     = "0.03"
+  default     = "0.04"
   description = "When set to empty will spin-up instance on-demand"
 }
 
 variable "infra_node_instance_type" {
-  default = "r3.large"
+  default = "r4.large"
 }
 
 variable "infra_node_root_vol_size" {
@@ -72,12 +72,12 @@ variable "master_count" {
 }
 
 variable "master_spot_price" {
-  default     = "0.03"
+  default     = "0.04"
   description = "When set to empty will spin-up instance on-demand"
 }
 
 variable "master_instance_type" {
-  default = "r3.large"
+  default = "r4.large"
 }
 
 variable "master_root_vol_size" {

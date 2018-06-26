@@ -23,10 +23,6 @@ variable "infra_node_root_vol_size" {
   default = "15"
 }
 
-variable "infra_node_glusterfs_vol_size" {
-  default = "20"
-}
-
 ## Master node configuration
 variable "master_instance_type" {}
 
@@ -42,10 +38,6 @@ variable "master_ami" {
 
 variable "master_root_vol_size" {
   default = "15"
-}
-
-variable "master_glusterfs_vol_size" {
-  default = "20"
 }
 
 ## Network options

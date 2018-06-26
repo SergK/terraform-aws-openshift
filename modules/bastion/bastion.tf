@@ -4,7 +4,7 @@ resource "aws_spot_instance_request" "bastion" {
   ami                         = "${var.bastion_ami}"
   instance_type               = "${var.bastion_instance_type}"
   spot_price                  = "${var.bastion_spot_price}"
-  subnet_id                   = "${element(data.aws_subnet.public.*.id, 0)}"
+  subnet_id                   = "${var.public_subnet_ids[0]}"
   associate_public_ip_address = true
   key_name                    = "${var.key_name}"
   vpc_security_group_ids      = ["${aws_security_group.bastion.id}"]

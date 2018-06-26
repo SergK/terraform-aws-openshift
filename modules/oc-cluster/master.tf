@@ -27,17 +27,10 @@ resource "aws_launch_configuration" "master" {
     volume_size           = "${var.master_root_vol_size}"
     delete_on_termination = true
   }
-
-  # glusterfs volume
-  ebs_block_device {
-    volume_type = "gp2"
-    device_name = "/dev/xvdb"
-    volume_size = "${var.master_glusterfs_vol_size}"
-  }
 }
 
 resource "aws_autoscaling_group" "master" {
-  vpc_zone_identifier       = ["${data.aws_subnet.private.*.id}"]
+  vpc_zone_identifier       = ["${var.private_subnet_ids}"]
   name                      = "${var.platform_name}-master"
   max_size                  = "${var.master_count}"
   min_size                  = "${var.master_count}"
