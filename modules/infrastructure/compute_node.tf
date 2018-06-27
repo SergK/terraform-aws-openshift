@@ -6,7 +6,7 @@ resource "aws_iam_instance_profile" "compute_node" {
 resource "aws_launch_configuration" "compute_node" {
   name_prefix   = "${var.platform_name}-compute-node-"
   image_id      = "${data.aws_ami.node.id}"
-  instance_type = "m4.large"
+  instance_type = "${var.compute_node_instance_type}"
   ebs_optimized = true
 
   security_groups = [
@@ -16,6 +16,7 @@ resource "aws_launch_configuration" "compute_node" {
   key_name             = "${aws_key_pair.platform.id}"
   user_data            = "${data.template_file.node_init.rendered}"
   iam_instance_profile = "${aws_iam_instance_profile.compute_node.name}"
+  spot_price           = "${var.upstream ? var.compute_node_spot_price : ""}"
 
   lifecycle {
     create_before_destroy = true
@@ -29,7 +30,7 @@ resource "aws_launch_configuration" "compute_node" {
 }
 
 resource "aws_autoscaling_group" "compute_node" {
-  vpc_zone_identifier       = ["${data.aws_subnet.node.*.id}"]
+  vpc_zone_identifier       = ["${local.node_scaling_subnet_ids}"]
   name                      = "${var.platform_name}-compute-node"
   max_size                  = "${var.compute_node_count}"
   min_size                  = "${var.compute_node_count}"

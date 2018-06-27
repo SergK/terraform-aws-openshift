@@ -22,5 +22,5 @@ resource "aws_security_group" "bastion" {
     "Role", "bastion"
   )}"
 
-  vpc_id = "${data.aws_vpc.platform.id}"
+  vpc_id = "${var.platform_vpc_id}"
 }

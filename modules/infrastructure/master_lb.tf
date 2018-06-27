@@ -2,7 +2,7 @@
 resource "aws_elb" "master" {
   name     = "${var.platform_name}-master-lb"
   internal = true
-  subnets  = ["${data.aws_subnet.private.*.id}"]
+  subnets  = ["${var.private_subnet_ids}"]
 
   security_groups = [
     "${aws_security_group.node.id}",
@@ -30,7 +30,7 @@ resource "aws_elb" "master" {
 
 resource "aws_route53_zone" "private" {
   name   = "${var.platform_name}.internal"
-  vpc_id = "${data.aws_vpc.platform.id}"
+  vpc_id = "${var.platform_vpc_id}"
 
   tags = "${map(
     "kubernetes.io/cluster/${var.platform_name}", "owned"

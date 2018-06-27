@@ -22,7 +22,7 @@ locals {
 resource "aws_instance" "bastion" {
   ami                         = "${data.aws_ami.bastion.id}"
   instance_type               = "t2.micro"
-  subnet_id                   = "${element(data.aws_subnet.public.*.id, 0)}"
+  subnet_id                   = "${var.public_subnet_ids[0]}"
   associate_public_ip_address = true
   key_name                    = "${aws_key_pair.platform.id}"
 

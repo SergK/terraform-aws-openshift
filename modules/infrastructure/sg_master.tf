@@ -42,5 +42,5 @@ resource "aws_security_group" "master_public" {
     "Name", "${var.platform_name}-master-public"
   )}"
 
-  vpc_id = "${data.aws_vpc.platform.id}"
+  vpc_id = "${var.platform_vpc_id}"
 }

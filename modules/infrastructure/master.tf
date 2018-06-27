@@ -6,7 +6,7 @@ resource "aws_iam_instance_profile" "master" {
 resource "aws_launch_configuration" "master" {
   name_prefix   = "${var.platform_name}-master-"
   image_id      = "${data.aws_ami.node.id}"
-  instance_type = "m4.large"
+  instance_type = "${var.master_instance_type}"
   ebs_optimized = true
 
   security_groups = [
@@ -50,7 +50,7 @@ locals {
 }
 
 resource "aws_autoscaling_group" "master" {
-  vpc_zone_identifier       = ["${data.aws_subnet.node.*.id}"]
+  vpc_zone_identifier       = ["${local.node_scaling_subnet_ids}"]
   name                      = "${var.platform_name}-master"
   max_size                  = "${var.master_count}"
   min_size                  = "${var.master_count}"

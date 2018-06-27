@@ -6,7 +6,7 @@ resource "aws_iam_instance_profile" "infra_node" {
 resource "aws_launch_configuration" "infra_node" {
   name_prefix   = "${var.platform_name}-infra-node-"
   image_id      = "${data.aws_ami.node.id}"
-  instance_type = "m4.large"
+  instance_type = "${var.infra_node_instance_type}"
   ebs_optimized = true
 
   security_groups = [
@@ -18,6 +18,7 @@ resource "aws_launch_configuration" "infra_node" {
   key_name             = "${aws_key_pair.platform.id}"
   user_data            = "${data.template_file.node_init.rendered}"
   iam_instance_profile = "${aws_iam_instance_profile.infra_node.name}"
+  spot_price           = "${var.upstream ? var.infra_node_spot_price : ""}"
 
   lifecycle {
     create_before_destroy = true
@@ -31,7 +32,7 @@ resource "aws_launch_configuration" "infra_node" {
 }
 
 resource "aws_autoscaling_group" "infra_node" {
-  vpc_zone_identifier       = ["${data.aws_subnet.node.*.id}"]
+  vpc_zone_identifier       = ["${local.node_scaling_subnet_ids}"]
   name                      = "${var.platform_name}-infra-node"
   max_size                  = "${var.infra_node_count}"
   min_size                  = "${var.infra_node_count}"

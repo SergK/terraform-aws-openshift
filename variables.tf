@@ -1,3 +1,5 @@
+variable "region" {}
+
 variable "platform_name" {
   description = "The name of the cluster that is used for tagging some resources"
 }
@@ -6,37 +8,56 @@ variable "key_pair_private_key_path" {
   description = "AWS key pair that is used for instances of the cluster includes the bastion"
 }
 
+variable "platform_cidr" {
+  type = "string"
+}
+
+variable "private_cidrs" {
+  type = "list"
+}
+
+variable "public_cidrs" {
+  type = "list"
+}
+
 variable "operator_cidrs" {
   type        = "list"
-  default     = ["0.0.0.0/0"]
   description = "CIDRS that is allowed from which master api can be accessed"
 }
 
 variable "public_access_cidrs" {
   type        = "list"
-  default     = ["0.0.0.0/0"]
   description = "CIDRS that is allowed from which public users can access served services in the cluster"
 }
 
-variable "compute_node_count" {
-  default = 2
-}
+variable "master_count" {}
 
-variable "infra_node_count" {
-  default = 1
-}
+variable "master_spot_price" {}
 
-variable "master_count" {
-  default = 1
-}
+variable "master_instance_type" {}
 
-variable "master_spot_price" {
-  default = "0.05"
+variable "compute_node_count" {}
+
+variable "compute_node_spot_price" {}
+
+variable "compute_node_instance_type" {}
+
+variable "infra_node_count" {}
+
+variable "infra_node_spot_price" {}
+
+variable "infra_node_instance_type" {}
+
+variable "openshift_inventory" {}
+
+variable "platform_secure_listener" {}
+
+variable "openshift_cluster_admin_users" {
+  type = "list"
 }
 
 variable "upstream" {
   description = "Sets true if you want to install Origin."
-  default     = false
 }
 
 variable "rh_subscription_pool_id" {
@@ -54,9 +75,7 @@ variable "rhn_password" {
   default     = ""
 }
 
-variable "openshift_major_version" {
-  default = "3.9"
-}
+variable "openshift_major_version" {}
 
 # Domains
 

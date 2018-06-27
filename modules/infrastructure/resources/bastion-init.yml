@@ -1,6 +1,6 @@
 #cloud-config
 locale: ja_JP.UTF-8
- 
+
 rh_subscription:
   username: ${rhn_username}
   password: '${rhn_password}'
