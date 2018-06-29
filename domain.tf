@@ -1,8 +1,7 @@
 module "domain" {
   source = "./modules/domain"
 
-  platform_name   = "${var.platform_name}"
-  platform_vpc_id = "${module.network.platform_vpc_id}"
+  platform_name = "${var.platform_name}"
 
   bastion_ip = "${module.infrastructure.bastion_public_ip}"
 
