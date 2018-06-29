@@ -4,10 +4,48 @@ write_files:
     permissions: 0644
     owner: root
     content: |
+        DEVS="/dev/xvdf"
+        VG=docker-vg
         STORAGE_DRIVER=overlay2
+        CONTAINER_ROOT_LV_NAME="dockerlv"
+        CONTAINER_ROOT_LV_MOUNT_PATH="/var/lib/docker"
+
+package_update: true
+package_upgrade: true
+
+packages:
+  - bash-completion
+  - bind-utils
+  - bridge-utils
+  - docker-python
+  - git
+  - httpd-tools
+  - iptables-services
+  - kernel
+  - kernel-tools
+  - kernel-tools-libs
+  - kexec-tools
+  - libcgroup
+  - libselinux-python
+  - net-tools
+  - NetworkManager
+  - psacct
+  - selinux-policy
+  - sos
+  - wget
+
 runcmd:
- - yum -y install docker-1.12.6 python-rhsm-certificates NetworkManager
- - systemctl enable docker
- - systemctl start docker
- - systemctl enable NetworkManager
- - systemctl start NetworkManager
+  - sed -i 's/SELINUX=.*/SELINUX=enforcing/' /etc/selinux/config
+  - rm -f /etc/localtime
+  - ln -s /usr/share/zoneinfo/UTC /etc/localtime
+  - systemctl restart dbus
+  - systemctl daemon-reload
+  - systemctl start NetworkManager
+  - systemctl enable NetworkManager
+  - sed 's/NM_CONTROLLED=no/NM_CONTROLLED=yes/' /etc/sysconfig/network-scripts/ifcfg-eth0 -i
+  - systemctl restart NetworkManager
+  - systemctl restart network
+  - echo Defaults:centos \!requiretty >> /etc/sudoers
+  - yum install -y docker
+  - systemctl enable docker
+  - systemctl start docker
