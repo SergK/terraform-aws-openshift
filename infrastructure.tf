@@ -1,6 +1,7 @@
 module "infrastructure" {
   source = "./modules/infrastructure"
 
+  platform_cidr = "${var.platform_cidr}"
   platform_name = "${var.platform_name}"
 
   platform_vpc_id    = "${module.network.platform_vpc_id}"

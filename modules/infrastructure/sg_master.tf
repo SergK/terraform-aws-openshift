@@ -44,3 +44,29 @@ resource "aws_security_group" "master_public" {
 
   vpc_id = "${var.platform_vpc_id}"
 }
+
+resource "aws_security_group" "master_lb_public" {
+  name        = "${var.platform_name}-from-public-lb-to-master"
+  description = "Master access from lb for ${var.platform_name}"
+
+  ingress {
+    from_port   = 8443
+    to_port     = 8443
+    protocol    = "tcp"
+    cidr_blocks = ["${var.platform_cidr}"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = "${map(
+    "kubernetes.io/cluster/${var.platform_name}", "owned",
+    "Name", "${var.platform_name}-master-lb-public"
+  )}"
+
+  vpc_id = "${var.platform_vpc_id}"
+}

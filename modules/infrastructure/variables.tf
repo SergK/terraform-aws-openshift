@@ -1,3 +1,7 @@
+variable "platform_cidr" {
+  type = "string"
+}
+
 variable "platform_name" {}
 
 variable "platform_vpc_id" {}
