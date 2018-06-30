@@ -49,6 +49,10 @@ runcmd:
   - yum install -y docker
   - systemctl enable docker
   - systemctl start docker
-  - echo 'UseDNS no' >> /etc/ssh/sshd_config
+  - echo "UseDNS no" >> /etc/ssh/sshd_config
+  - systemctl reload sshd
   - mkdir /etc/aws
-  - [ sh, -c, 'echo "[Global]\nZone = $(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone)" > /etc/aws/aws.conf' ]
+  - [ sh, -c, 'echo -e "[Global]\nZone = $(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone)" > /etc/aws/aws.conf' ]
+  - yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+  - sed -i -e "s/^enabled=1/enabled=0/" /etc/yum.repos.d/epel.repo
+  - yum -y --enablerepo=epel install python-pip htop

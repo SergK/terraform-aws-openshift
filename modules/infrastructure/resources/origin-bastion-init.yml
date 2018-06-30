@@ -1,5 +1,5 @@
 #cloud-config
-locale: ja_JP.UTF-8
+locale: en_US.UTF-8
 
 runcmd:
  - yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
