@@ -36,6 +36,9 @@ resource "aws_lb_listener" "platform_public" {
   port              = "443"
   protocol          = "TCP"
 
+  # ssl_policy        = "ELBSecurityPolicy-2016-08"
+  # certificate_arn   = "${var.master_public_lb_ssl_cert_arn}"
+
   default_action {
     target_group_arn = "${aws_lb_target_group.platform_public.arn}"
     type             = "forward"

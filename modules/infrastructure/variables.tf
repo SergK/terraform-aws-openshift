@@ -36,6 +36,8 @@ variable "openshift_cluster_admin_users" {
   type = "list"
 }
 
+variable "master_public_lb_ssl_cert_arn" {}
+
 variable "upstream" {}
 
 variable "rhn_username" {}

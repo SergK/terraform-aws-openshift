@@ -56,6 +56,8 @@ variable "openshift_cluster_admin_users" {
   type = "list"
 }
 
+variable "master_public_lb_ssl_cert_arn" {}
+
 variable "upstream" {
   description = "Sets true if you want to install Origin."
 }

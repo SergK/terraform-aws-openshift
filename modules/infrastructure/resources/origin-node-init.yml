@@ -49,3 +49,6 @@ runcmd:
   - yum install -y docker
   - systemctl enable docker
   - systemctl start docker
+  - echo 'UseDNS no' >> /etc/ssh/sshd_config
+  - mkdir /etc/aws
+  - [ sh, -c, 'echo "[Global]\nZone = $(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone)" > /etc/aws/aws.conf' ]

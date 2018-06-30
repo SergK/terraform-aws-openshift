@@ -29,6 +29,8 @@ module "infrastructure" {
   infra_node_spot_price    = "${var.infra_node_spot_price}"
   infra_node_instance_type = "${var.infra_node_instance_type}"
 
+  master_public_lb_ssl_cert_arn = "${var.master_public_lb_ssl_cert_arn}"
+
   key_pair_private_key = "${file(var.key_pair_private_key_path == "" ? "${path.module}/empty.txt" : var.key_pair_private_key_path)}"
 
   platform_secure_listener      = "${var.platform_secure_listener}"

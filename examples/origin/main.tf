@@ -27,6 +27,8 @@ module "openshift_platform" {
   infra_node_spot_price    = "${var.infra_node_spot_price}"
   infra_node_instance_type = "${var.infra_node_instance_type}"
 
+  master_public_lb_ssl_cert_arn = "${var.master_public_lb_ssl_cert_arn}"
+
   platform_default_subdomain = "${var.platform_default_subdomain}"
 
   platform_secure_listener      = "${var.platform_secure_listener}"

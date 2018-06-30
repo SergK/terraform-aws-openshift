@@ -56,6 +56,13 @@ resource "aws_security_group" "master_lb_public" {
     cidr_blocks = ["${var.platform_cidr}"]
   }
 
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["${var.platform_cidr}"]
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
