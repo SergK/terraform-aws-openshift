@@ -9,14 +9,13 @@ resource "aws_acm_certificate" "openshift-cluster" {
   subject_alternative_names = [
     "master.${var.platform_default_subdomain}",
     "*.${var.platform_default_subdomain}",
-    "${var.platform_default_subdomain}",
   ]
 
   validation_method = "DNS"
 }
 
 resource "aws_route53_record" "openshift-cluster_cert-verification" {
-  count   = "3"
+  count   = "2"
   name    = "${lookup(aws_acm_certificate.openshift-cluster.domain_validation_options[count.index], "resource_record_name")}"
   type    = "${lookup(aws_acm_certificate.openshift-cluster.domain_validation_options[count.index], "resource_record_type")}"
   zone_id = "${data.aws_route53_zone.wildcard_zone.id}"
