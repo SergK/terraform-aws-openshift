@@ -56,8 +56,6 @@ variable "openshift_inventory" {}
 
 variable "platform_secure_listener" {}
 
-variable "master_public_lb_ssl_cert_arn" {}
-
 variable "openshift_cluster_admin_users" {
   type = "list"
 }
