@@ -1,5 +1,7 @@
 variable "region" {}
 
+variable "role_arn" {}
+
 variable "platform_name" {
   description = "The name of the cluster that is used for tagging some resources"
 }

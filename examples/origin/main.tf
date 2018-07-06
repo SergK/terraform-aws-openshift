@@ -2,6 +2,7 @@ module "openshift_platform" {
   source = "../.."
 
   region                    = "${var.region}"
+  role_arn                  = "${var.role_arn}"
   upstream                  = true
   platform_name             = "${var.platform_name}"
   key_pair_private_key_path = "${var.key_pair_private_key_path}"
